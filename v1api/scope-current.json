@@ -1,0 +1,10 @@
+{
+  "from": "Epic",
+  "select": [
+    "Key",
+    "Number",
+    "Scope.Name"
+  ],
+  "find": "FY19 Q2",
+  "findin": "Scope.Name"
+}
