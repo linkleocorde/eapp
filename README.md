@@ -8,5 +8,5 @@
 
 ## Analytics
 - [ ] Finish API queries
-      - [ ] Deploy as PowerShell scripts
-      - [ ] Automate/batch to Tableau Server
+     - [ ] Deploy as PowerShell scripts
+     - [ ] Automate/batch to Tableau Server
