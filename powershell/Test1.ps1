@@ -24,9 +24,12 @@ $dt = New-Object System.Data.DataTable "Test1"
 [void]$dt.Columns.Add("Scope",[string])
 [void]$dt.Columns.Add("Child",[string])
 
+$sources = @("Epic","Story")
+foreach($s in $sources){
+
 $query = @"
 {
-  "from": "Epic",
+  "from": "$($s)",
   "select": [
     "Number",
     "Name",
@@ -37,9 +40,8 @@ $query = @"
     "Scope.Name",
     "Subs[AssetState!='Dead'].Number"
   ],
-  "where": {
-    "Number": "E-12685"
-  }
+  "find": "EAPP",
+  "findin": "Scope.ParentMeAndUp.Name"
 }
 "@
 
@@ -48,6 +50,7 @@ $result = Invoke-RestMethod -Uri $PostUri -Body $query -Headers $reqHeaders -Met
 # $result | Format-List
 
 foreach($rw in $result[0]){
+if($rw."Subs[AssetState!='Dead'].Number".Count -gt 0){
     foreach($ch in $rw."Subs[AssetState!='Dead'].Number"){
         $nr = $dt.NewRow()
 
@@ -63,8 +66,23 @@ foreach($rw in $result[0]){
         
         $dt.Rows.Add($nr)
     }
+} else {
+        $nr = $dt.NewRow()
+
+        $nr.ID = $rw."_oid"
+        $nr.Number = $rw."Number"
+        $nr.Name = $rw."Name"
+        $nr.AssetType = $rw."AssetType"
+        $nr.Category = $rw."Category.Name"
+        $nr.Status = $rw."Status.Name"
+        $nr.State = $rw."Status.RollupState"
+        $nr.Scope = $rw."Scope.Name"
+        
+        $dt.Rows.Add($nr)
+    }
 }
 
+}
 # $dt | Format-Table
 
 Write-Host Exporting $report
