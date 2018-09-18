@@ -20,3 +20,6 @@
   - Sub.Number
   - Count those missing children and parents
     - Stories missing children might not be an issue
+
+## Findings
+- No API field for Estimated Points.
