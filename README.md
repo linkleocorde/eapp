@@ -22,4 +22,5 @@
     - Stories missing children might not be an issue
 
 ## Findings
-- No API field for Estimated Points.
+- No API field for Estimated Points or Swag.
+- Per April, Owner is not tracked nor is it consistent when it is.
